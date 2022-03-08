@@ -1,1 +1,1 @@
-# voluxgan
+# volux-gan webpage
