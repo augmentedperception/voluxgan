@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link
-  href="https://fonts.googleapis.com/css?family=Roboto"
-  rel="stylesheet"
-  />
-  <link
-  rel="stylesheet"
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-  integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
-  crossorigin="anonymous"
-  />
-  <link href="./demo/demo.css" rel="stylesheet" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto"
+        rel="stylesheet" />
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+        crossorigin="anonymous" />
+  <link href="./demo/demo.css"
+        rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
   <script src="https://unpkg.com/@tensorflow/tfjs-core@3.7.0/dist/tf-core.js"></script>
-  <script src="https://unpkg.com/@tensorflow/tfjs-backend-cpu@3.7.0/dist/tf-backend-cpu.js"></script>
-  <script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@3.7.0/dist/tf-backend-webgl.js"></script>
+  <script
+          src="https://unpkg.com/@tensorflow/tfjs-backend-cpu@3.7.0/dist/tf-backend-cpu.js"></script>
+  <script
+          src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@3.7.0/dist/tf-backend-webgl.js"></script>
   <script src="https://unpkg.com/@tensorflow/tfjs-layers@3.7.0/dist/tf-layers.js"></script>
   <script src="https://unpkg.com/@tensorflow/tfjs-converter@3.7.0/dist/tf-converter.js"></script>
-  <script src="https://unpkg.com/@tensorflow/tfjs-backend-wasm@3.7.0/dist/tf-backend-wasm.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/signature_pad@3.0.0-beta.4/dist/signature_pad.umd.min.js"></script>
+  <script
+          src="https://unpkg.com/@tensorflow/tfjs-backend-wasm@3.7.0/dist/tf-backend-wasm.js"></script>
+  <script
+          src="https://cdn.jsdelivr.net/npm/signature_pad@3.0.0-beta.4/dist/signature_pad.umd.min.js"></script>
 
   <!-- Bootstrap core CSS -->
   <!-- <link rel="icon" type="image/png" href="images/sphere_tracing.png"> -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+        crossorigin="anonymous">
   <!-- Custom styles for this template -->
-  <link href="css/distRenderer.css" rel="stylesheet">
+  <link href="css/distRenderer.css"
+        rel="stylesheet">
   <base target="_blank">
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RTBV33BNQV"></script>
+  <script async
+          src="https://www.googletagmanager.com/gtag/js?id=G-RTBV33BNQV"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-RTBV33BNQV');
   </script>
@@ -44,432 +52,499 @@
 
 <body>
 
-<style>
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,600,700");
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,600,700");
 
-/* IDs */
+    /* IDs */
 
-#images {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    text-align: center;
-    width: 800px;
-}
+    #images {
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 10px;
+      text-align: center;
+      width: 800px;
+    }
 
-#images > .image_wrapper {
-    display: inline-block;
-    margin: 15px;
-    width: 770px;
-}
+    #images>.image_wrapper {
+      display: inline-block;
+      margin: 15px;
+      width: 770px;
+    }
 
-/* Classes */
+    /* Classes */
 
-img .input-image {
-  width: 256px;
-  height: 384px;
-}
-.color-g {
-  color: #DF6243;
-}
-.color-p {
-  color: #E0D40B;
-}
-.color-s {
-  color: #6195E6;
-}
-.color-w {
-  color: white;
-}
-#perf {
-  color: grey;
-}
+    img .input-image {
+      width: 256px;
+      height: 384px;
+    }
 
-.bold {
-    font-weight: bold;
-}
+    .color-g {
+      color: #DF6243;
+    }
 
-.bottom {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
+    .color-p {
+      color: #E0D40B;
+    }
 
-.bottom_circle {
-    z-index: 2;
-}
+    .color-s {
+      color: #6195E6;
+    }
 
-.comparison_table {
-    border: 2px solid #444;
-    margin: 0 auto;
-}
+    .color-w {
+      color: white;
+    }
 
-.comparison {
-    cursor: pointer;
-}
+    #perf {
+      color: grey;
+    }
 
-.comparison:hover {
-    box-shadow:0 0 1px 1px #ddd;
-}
+    .bold {
+      font-weight: bold;
+    }
 
-.comparisons {
-    height: 82px;
-    margin: 0;
-    padding: 0;
-}
+    .bottom {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
 
-.comparisons_menu {
-    height: 30px;
-}
+    .bottom_circle {
+      z-index: 2;
+    }
 
-.comparisons > ul {
-    padding: 10px;
-}
+    .comparison_table {
+      border: 2px solid #444;
+      margin: 0 auto;
+    }
 
-.comparisons > ul li {
-    background-color: #999;
-    border-radius: 7px;
-    color: white;
-    display: inline-block;
-    float: left;
-    font-size: 82.5%;
-    height: 28px;
-    line-height: 1.9;
-    list-style: none;
-    margin: 0 15px 10px 0;
-    padding: 0 12px;
-    text-align: -webkit-match-parent;
-}
+    .comparison {
+      cursor: pointer;
+    }
 
-.comparisons > ul li.top_active, .top_circle {
-    background-color: #4285f4;
-}
+    .comparison:hover {
+      box-shadow: 0 0 1px 1px #ddd;
+    }
 
-.comparisons > ul li.bottom_active, .bottom_circle {
-    background-color: #db3236;
-}
+    .comparisons {
+      height: 82px;
+      margin: 0;
+      padding: 0;
+    }
 
-.header {
-    background: #2e2e2e;
-    border-bottom: 1px solid #e5e5e5;
-    height: 140px;
-    left: 0;
-    position: relative;
-    top: 0;
-    width: 100%;
-}
+    .comparisons_menu {
+      height: 30px;
+    }
 
-.hover_images .top_image,.bottom_image {
-    width: 770px;
-}
+    .comparisons>ul {
+      padding: 10px;
+    }
 
-.image_wrapper > .hover_images {
-    display: inline-block;
-    position: relative;
-}
+    .comparisons>ul li {
+      background-color: #999;
+      border-radius: 7px;
+      color: white;
+      display: inline-block;
+      float: left;
+      font-size: 82.5%;
+      height: 28px;
+      line-height: 1.9;
+      list-style: none;
+      margin: 0 15px 10px 0;
+      padding: 0 12px;
+      text-align: -webkit-match-parent;
+    }
 
-.linksline {
-    background: #454545;
-    border-bottom: 1px solid #f2f2f2;
-    color: #fff;
-    font-family: 'Open Sans', Arial, sans-serif;
-    font-size: 15px;
-    font-weight: bold;
-    min-height: 28px;
-    overflow: hidden;
-    padding: 0 12px;
-    padding-top: 6px;
-    text-align: center;
-}
+    .comparisons>ul li.top_active,
+    .top_circle {
+      background-color: #4285f4;
+    }
 
-.log_info {
-    font-family: 'Open Sans';
-    color: #fff;
-    margin: 10px auto;
-    width: 1200px;
-    font-size: 12px;
-}
+    .comparisons>ul li.bottom_active,
+    .bottom_circle {
+      background-color: #db3236;
+    }
 
-.menu {
-    background: #fcfcfc;
-    border-bottom: 1px solid #f2f2f2;
-    color: #444;
-    font-family: Arial, sans-serif;
-    font-size: 11px;
-    min-height: 28px;
-    overflow: hidden;
-    padding: 0 12px;
-}
+    .header {
+      background: #2e2e2e;
+      border-bottom: 1px solid #e5e5e5;
+      height: 140px;
+      left: 0;
+      position: relative;
+      top: 0;
+      width: 100%;
+    }
 
-.menu > ul {
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    left: 10%;
-    list-style: none;
-    margin: auto;
-    max-width: 1250px;
-    padding: 0;
-    position: relative;
-}
+    .hover_images .top_image,
+    .bottom_image {
+      width: 770px;
+    }
 
-.menu > ul a {
-    display: inline-block;
-    text-decoration: underline;
-}
+    .image_wrapper>.hover_images {
+      display: inline-block;
+      position: relative;
+    }
 
-.menu > ul li {
-    color: #444;
-    display: inline-block;
-    float: left;
-    height: 28px;
-    line-height: 2.4;
-    list-style: none;
-    margin: 0 25px 0 0;
-    text-align: -webkit-match-parent;
-}
+    .linksline {
+      background: #454545;
+      border-bottom: 1px solid #f2f2f2;
+      color: #fff;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      min-height: 28px;
+      overflow: hidden;
+      padding: 0 12px;
+      padding-top: 6px;
+      text-align: center;
+    }
 
-.table_header {
-    background: #454545;
-    color: #fff;
-    font-family: 'Open Sans', Arial, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-}
+    .log_info {
+      font-family: 'Open Sans';
+      color: #fff;
+      margin: 10px auto;
+      width: 1200px;
+      font-size: 12px;
+    }
 
-.table_cell_input {
-    width: 100%;
-}
+    .menu {
+      background: #fcfcfc;
+      border-bottom: 1px solid #f2f2f2;
+      color: #444;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      min-height: 28px;
+      overflow: hidden;
+      padding: 0 12px;
+    }
 
-.title {
-    left: 10%;
-    position: relative;
-    min-width: 550px;
-    width: 90%;
-}
+    .menu>ul {
+      -webkit-margin-start: 0;
+      -webkit-margin-end: 0;
+      left: 10%;
+      list-style: none;
+      margin: auto;
+      max-width: 1250px;
+      padding: 0;
+      position: relative;
+    }
 
-.title > p {
-    border-left: 1px solid #babcc0;
-    color: #fff;
-    display: inline-block;
-    font-family: 'Open Sans', arial, sans-serif;
-    font-size: 2em;
-    margin: 0;
-    margin-top: 10px;
-    padding-left: 20px;
-    vertical-align: top;
-    width: 800px;
-    height: 50px;
-}
+    .menu>ul a {
+      display: inline-block;
+      text-decoration: underline;
+    }
 
-.top {
-    left: 0;
-    position: relative;
-    top: 0;
-    z-index: 2;
-}
+    .menu>ul li {
+      color: #444;
+      display: inline-block;
+      float: left;
+      height: 28px;
+      line-height: 2.4;
+      list-style: none;
+      margin: 0 25px 0 0;
+      text-align: -webkit-match-parent;
+    }
 
-.top:hover {
-    opacity: 0;
-}
+    .table_header {
+      background: #454545;
+      color: #fff;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+    }
 
-.top_circle
-.bottom_circle {
-    border-radius: 7.5px;
-    height: 15px;
-    position: absolute;
-    right: 40px;
-    top: 30px;
-    width: 15px;
-}
+    .table_cell_input {
+      width: 100%;
+    }
 
-.top_circle {
-    z-index: 4;
-}
+    .title {
+      left: 10%;
+      position: relative;
+      min-width: 550px;
+      width: 90%;
+    }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    text-align: center;
-    margin: 0px -10px 0px -10px;
-}
+    .title>p {
+      border-left: 1px solid #babcc0;
+      color: #fff;
+      display: inline-block;
+      font-family: 'Open Sans', arial, sans-serif;
+      font-size: 2em;
+      margin: 0;
+      margin-top: 10px;
+      padding-left: 20px;
+      vertical-align: top;
+      width: 800px;
+      height: 50px;
+    }
 
-.grid-container > div {
-    text-align: center;
-}
+    .top {
+      left: 0;
+      position: relative;
+      top: 0;
+      z-index: 2;
+    }
 
-.footer {
-    width: 100%;
-    height: 65px;
-    float: left;
-    margin-top: 25px;
-}
+    .top:hover {
+      opacity: 0;
+    }
 
-.footer-googleresearch {
-    width: 20%;
-    float: left;
-}
+    .top_circle .bottom_circle {
+      border-radius: 7.5px;
+      height: 15px;
+      position: absolute;
+      right: 40px;
+      top: 30px;
+      width: 15px;
+    }
 
-.footer-google {
-    width: 20%;
-    float: right;
-    text-align: right;
-}
+    .top_circle {
+      z-index: 4;
+    }
 
-</style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto auto;
+      text-align: center;
+      margin: 0px -10px 0px -10px;
+    }
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#"
-    >VoLux-GAN: A Generative Model for 3D Face Synthesis with HDRI Relighting</a
-  >
+    .grid-container>div {
+      text-align: center;
+    }
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle">
-          <span class="navbar-toggler-icon"></span>
+    .footer {
+      width: 100%;
+      height: 65px;
+      float: left;
+      margin-top: 25px;
+    }
+
+    .footer-googleresearch {
+      width: 20%;
+      float: left;
+    }
+
+    .footer-google {
+      width: 20%;
+      float: right;
+      text-align: right;
+    }
+
+  </style>
+
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand"
+       href="#">VoLux-GAN: A Generative Model for 3D Face Synthesis with HDRI Relighting</a>
+
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarToggle">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarToggle">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#", target="_self">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#Abstract", target="_self">Abstract</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#Paper", target="_self">Paper</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#More_Result", target="_self">More Demonstration of VoLux-GAN</a>
-              </li_self>
-        </ul>
+    <div class="collapse navbar-collapse"
+         id="navbarToggle">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link"
+             href="#"
+             ,
+             target="_self">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             href="#Abstract"
+             ,
+             target="_self">Abstract</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             href="#Paper"
+             ,
+             target="_self">Paper</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             href="#More_Result"
+             ,
+             target="_self">More Demonstration of VoLux-GAN</a>
+          </li_self>
+      </ul>
     </div>
-</nav>
+  </nav>
 
-    <div class="container" style="padding-top: 80px; font-size: 20px">
+  <div class="container"
+       style="padding-top: 80px; font-size: 20px">
 
-        <div align="center">
+    <div align="center">
 
-            <br>
-
-            <h1 class="text-center" align="center" style="font-size: 50px">
-            VoLux-GAN: A Generative Model for 3D Face Synthesis with HDRI Relighting
-            </h1>
-            <br>
-            <a href="https://ca.linkedin.com/in/feitong-tan-555200159">Feitong Tan</a><sup style="font-size:12px">1,2</sup> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="http://www.seanfanello.it/">Sean Fanello</a><sup style="font-size:12px">1</sup> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="https://www.meka.page/">Abhimitra Meka</a><sup style="font-size:12px">1</sup> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="https://scholar.google.es/citations?user=dznX1DMAAAAJ&hl=es">Sergio Orts-Escolano</a><sup style="font-size:12px">1</sup> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="https://uk.linkedin.com/in/danhang-tang-39082a12">Danhang Tang</a><sup style="font-size:12px">1</sup> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="https://research.google/people/106687/">Rohit Pandey</a><sup style="font-size:12px">1</sup> &nbsp;&nbsp;&nbsp;&nbsp;
-            <br>
-            <a href="https://scholar.google.ca/citations?user=EEre0EcAAAAJ&hl=en">Jonathan Taylor</a><sup style="font-size:12px">1</sup> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="https://www.cs.sfu.ca/~pingtan/">Ping Tan</a><sup style="font-size:12px">2</sup> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="https://www.zhangyinda.com/">Yinda Zhang</a><sup style="font-size:12px">1</sup>
-            <!-- <br><br> -->
-            <!-- <sup style="font-size:17px">1</sup> Simon Fraser University &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <sup style="font-size:17px">2</sup> Google -->
-            <!-- <br> -->
-
-            <!-- <a>Simon Fraser University</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>Google</a> -->
-
-            <br><br>
-            <sup style="font-size:12px">1</sup> &nbsp;  <a href="https://www.google.com/">Google</a> &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <sup style="font-size:12px">2</sup> &nbsp; &nbsp;<a href="https://www.sfu.ca/">Simon Fraser University</a>
-
-            <br>
-            <a style="color:black"><img class="img-responsive img-rounded" src="figure/google.png" style="height:40px" alt=""></a> &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            <!-- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  -->
-
-            <!-- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   -->
-
-            <a style="color:black"><img class="img-responsive img-rounded" src="figure/sfu_logo.png" style="height:40px" alt=""></a>
-            &nbsp; &nbsp; &nbsp; &nbsp;
-
-            <br>
-
-            <!-- <br><br> -->
-        </div>
-    </div>
-
-
-    <!-- Teaser -->
-    <div class='container' id='Teaser'>
-   
-            <br>
-            <hr>
-            <br>
-
-            <div class="row">
-              <div ><img src="interpolate/example2/albedo.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example2/relit.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example2/normal.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example2/diffuse.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example2/specular.gif" width="215"></div>
-            </div>
-
-              <div class="row">
-              <div class="col-md-2 text-center">Albedo</div>
-              <div class="col-md-3 text-center">Relit Image</div>
-              <div class="col-md-2 text-center">Normals</div>
-              <div class="col-md-3 text-center">Diffuse Shading</div>
-              <div class="col-md-2 text-center">specular Shading</div>
-            </div>
-  
       <br>
-      </div>
 
-    <!-- Abstract -->
-    <div class="container">
+      <h1 class="text-center"
+          align="center"
+          style="font-size: 50px">
+        VoLux-GAN: A Generative Model for 3D Face Synthesis with HDRI Relighting
+      </h1>
+      <br>
+      <a href="https://ca.linkedin.com/in/feitong-tan-555200159">Feitong Tan</a><sup
+           style="font-size:12px">1,2</sup> &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="http://www.seanfanello.it/">Sean Fanello</a><sup style="font-size:12px">1</sup>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.meka.page/">Abhimitra Meka</a><sup style="font-size:12px">1</sup>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://scholar.google.es/citations?user=dznX1DMAAAAJ&hl=es">Sergio
+        Orts-Escolano</a><sup style="font-size:12px">1</sup> &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://uk.linkedin.com/in/danhang-tang-39082a12">Danhang Tang</a><sup
+           style="font-size:12px">1</sup> &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://research.google/people/106687/">Rohit Pandey</a><sup
+           style="font-size:12px">1</sup> &nbsp;&nbsp;&nbsp;&nbsp;
+      <br>
+      <a href="https://scholar.google.ca/citations?user=EEre0EcAAAAJ&hl=en">Jonathan Taylor</a><sup
+           style="font-size:12px">1</sup> &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.cs.sfu.ca/~pingtan/">Ping Tan</a><sup style="font-size:12px">2</sup>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.zhangyinda.com/">Yinda Zhang</a><sup style="font-size:12px">1</sup>
+      <!-- <br><br> -->
+      <!-- <sup style="font-size:17px">1</sup> Simon Fraser University &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <sup style="font-size:17px">2</sup> Google -->
+      <!-- <br> -->
+
+      <!-- <a>Simon Fraser University</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>Google</a> -->
+
+      <br><br>
+      <sup style="font-size:12px">1</sup> &nbsp; <a href="https://www.google.com/">Google</a> &nbsp;
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      &nbsp; &nbsp; <sup style="font-size:12px">2</sup> &nbsp; &nbsp;<a
+         href="https://www.sfu.ca/">Simon Fraser University</a>
+
+      <br>
+      <a style="color:black"><img class="img-responsive img-rounded"
+             src="figure/google.png"
+             style="height:40px"
+             alt=""></a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      <!-- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  -->
+
+      <!-- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   -->
+
+      <a style="color:black"><img class="img-responsive img-rounded"
+             src="figure/sfu_logo.png"
+             style="height:40px"
+             alt=""></a>
+      &nbsp; &nbsp; &nbsp; &nbsp;
+
+      <br>
+
+      <!-- <br><br> -->
+    </div>
+  </div>
+
+
+  <!-- Teaser -->
+  <div class='container'
+       id='Teaser'>
+
+    <br>
+    <hr>
+    <br>
+
+    <div class="row">
+      <div><img src="interpolate/example2/albedo.gif"
+             width="215"></div>
+      <div class="ml-auto"><img src="interpolate/example2/relit.gif"
+             width="215"></div>
+      <div class="ml-auto"><img src="interpolate/example2/normal.gif"
+             width="215"></div>
+      <div class="ml-auto"><img src="interpolate/example2/diffuse.gif"
+             width="215"></div>
+      <div class="ml-auto"><img src="interpolate/example2/specular.gif"
+             width="215"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2 text-center">Albedo</div>
+      <div class="col-md-3 text-center">Relit Image</div>
+      <div class="col-md-2 text-center">Normals</div>
+      <div class="col-md-3 text-center">Diffuse Shading</div>
+      <div class="col-md-2 text-center">specular Shading</div>
+    </div>
+
+    <br>
+  </div>
+
+  <!-- Abstract -->
+  <div class="container">
     <hr>
     <br>
     <center>
-        <h2 id="Abstract" style="padding-top: 80px; margin-top: -80px;">Abstract</h2>
+      <h2 id="Abstract"
+          style="padding-top: 80px; margin-top: -80px;">Abstract</h2>
     </center>
     <br>
 
     <p style="font-size: 20px">
-        We propose VoLux-GAN, a generative framework to synthesize 3D-aware faces with convincing relighting. Our main contribution is a volumetric HDRI relighting method that can efficiently accumulate albedo, diffuse and specular lighting contributions along each 3D ray for any desired HDR environmental map. Additionally, we show the importance of supervising the image decomposition process using multiple discriminators. In particular, we propose a data augmentation technique that leverages recent advances in single image portrait relighting to enforce consistent geometry, albedo, diffuse and specular components. Multiple experiments and comparisons with other generative frameworks show how our model is a step forward towards photorealistic relightable generative models.
+      We propose VoLux-GAN, a generative framework to synthesize 3D-aware faces with convincing
+      relighting. Our main contribution is a volumetric HDRI relighting method that can efficiently
+      accumulate albedo, diffuse and specular lighting contributions along each 3D ray for any
+      desired HDR environmental map. Additionally, we show the importance of supervising the image
+      decomposition process using multiple discriminators. In particular, we propose a data
+      augmentation technique that leverages recent advances in single image portrait relighting to
+      enforce consistent geometry, albedo, diffuse and specular components. Multiple experiments and
+      comparisons with other generative frameworks show how our model is a step forward towards
+      photorealistic relightable generative models.
     </p>
-    </div><br>
+  </div><br>
 
-    <!-- Paper -->
-    <div class='container'>
+  <!-- Paper -->
+  <div class='container'>
     <hr>
     <br>
     <center>
-        <h2 id="Paper" style="padding-top: 80px; margin-top: -80px">Paper</h2>
+      <h2 id="Paper"
+          style="padding-top: 80px; margin-top: -80px">Paper</h2>
     </center>
     <br>
     <div class="paper">
-    <div class="grid-container">
-        <div class="item1"><a href=""><img src="figure/paper_page_01.jpg" class="paper-thumbnail" style="width:250px"></a></div>
-        <div class="item2"><a href=""><img src="figure/paper_page_04.jpg" class="paper-thumbnail" style="width:250px"></a></div>
-        <div class="item3"><a href=""><img src="figure/paper_page_06.jpg" class="paper-thumbnail" style="width:250px"></a></div>
-        <div class="item4"><a href=""><img src="figure/paper_page_07.jpg" class="paper-thumbnail" style="width:250px"></a></div>
-    </div>
+      <div class="grid-container">
+        <div class="item1"><a href=""><img src="figure/paper_page_01.jpg"
+                 class="paper-thumbnail"
+                 style="width:250px"></a></div>
+        <div class="item2"><a href=""><img src="figure/paper_page_04.jpg"
+                 class="paper-thumbnail"
+                 style="width:250px"></a></div>
+        <div class="item3"><a href=""><img src="figure/paper_page_06.jpg"
+                 class="paper-thumbnail"
+                 style="width:250px"></a></div>
+        <div class="item4"><a href=""><img src="figure/paper_page_07.jpg"
+                 class="paper-thumbnail"
+                 style="width:250px"></a></div>
+      </div>
 
-    <br>
+      <br>
 
-    <center>
-    <span style="font-size:20px">
-        <a href="https://arxiv.org/pdf/2201.04873.pdf">[arXiv]</a> &nbsp; &nbsp;
-        <a href="">[GitHub] (Coming Soon)</a> &nbsp; &nbsp;
-    </span>
-    </center>
+      <center>
+        <span style="font-size:20px">
+          <a href="https://arxiv.org/pdf/2201.04873.pdf">[arXiv]</a> &nbsp; &nbsp;
+          <a href="https://github.com/google/volux-gan">[GitHub]</a> &nbsp; &nbsp;
+        </span>
+      </center>
 
-    <br>
+      <br>
 
-    <p style="font-size: 15px">Download the paper (2.9M) <a href="paper.pdf">here</a>.</p>
-    <p style="font-size: 15px">Download the supplementary (3.1M) <a href="supp.pdf">here</a>.</p>
+      <p style="font-size: 15px">Download the paper (2.9M) <a href="paper.pdf">here</a>.</p>
+      <p style="font-size: 15px">Download the supplementary (3.1M) <a href="supp.pdf">here</a>.</p>
     </div>
 
     <br>
 
     <div class="section list">
-        <h4>Citation</h4>
-        <p><a href="./voluxgan2022.bib" target="_blank">BibTeX, 1 KB</a></p>
-        <div class="section bibtex">
+      <h4>Citation</h4>
+      <p><a href="./voluxgan2022.bib"
+           target="_blank">BibTeX, 1 KB</a></p>
+      <div class="section bibtex">
         <pre>@misc{tan2022voluxgan,
-            title={VoLux-GAN: A Generative Model for 3D Face Synthesis with HDRI Relighting}, 
+            title={VoLux-GAN: A Generative Model for 3D Face Synthesis with HDRI Relighting},
             author={Feitong Tan and Sean Fanello and Abhimitra Meka and Sergio Orts-Escolano and Danhang Tang and Rohit Pandey and Jonathan Taylor and Ping Tan and Yinda Zhang},
             year={2022},
             eprint={2201.04873},
@@ -477,220 +552,261 @@ img .input-image {
             primaryClass={cs.CV}
       }
         </pre>
-          </div>
-          </div>
+      </div>
+    </div>
     <hr>
     <br>
 
 
 
     <div class='container'>
-        <center>
-            <h2 id='More_Result' style="padding-top: 40px; margin-top: 20px">More Results</h2>
-            <br>
-            <br>  
-  
-              <div class="row">
-              <div ><img src="interpolate/example1/albedo.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example1/relit.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example1/normal.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example1/diffuse.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example1/specular.gif" width="215"></div>
-            </div>
-            <br>  
-            <div class="row">
-              <div ><img src="interpolate/example3/albedo.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example3/relit.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example3/normal.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example3/diffuse.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example3/specular.gif" width="215"></div>
-            </div>
-            <br>  
-            <div class="row">
-              <div ><img src="interpolate/example5/albedo.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example5/relit.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example5/normal.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example5/diffuse.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example5/specular.gif" width="215"></div>
-            </div>
-            <br>  
-            <div class="row">
-              <div ><img src="interpolate/example4/albedo.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example4/relit.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example4/normal.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example4/diffuse.gif" width="215"></div>
-              <div class="ml-auto"><img src="interpolate/example4/specular.gif" width="215"></div>
-            </div>
-              <div class="row">
-              <div class="col-md-2 text-center">Albedo</div>
-              <div class="col-md-3 text-center">Relit Image</div>
-              <div class="col-md-2 text-center">Normals</div>
-              <div class="col-md-3 text-center">Diffuse Shading</div>
-              <div class="col-md-2 text-center">specular Shading</div>
-            </div>
-  
-          </div>
-  
-      <br>
-        <!-- <div align=justify> 
-         VoLux-GAN is generative face image synthesis method that can generate novel identities in a fully 3D aware manner to enable geometry-consistent view-synthesis while also relighting the generated identities under desired environments with accurate light-transport effects such as shading, shadows and specularities. Volux-GAN generates not just the relit images, but also the underlying physical constituents such as the albedo, geometry, normals and implicit neural surface reflectance features. The generated geometry is used to render diffuse and specular shading layers that are passed as additional maps to a neural rendering network to aid in synthesizing photorealistic relighting. In this animation, we rotate the camera and lighting while interpolating between two randomly sampled latent codes. 
-        </div> -->
-      </center>
-      </div>
-
-
-      <br/>
-      <hr>
-   
-      <div class='container' id='Relighting_GT'>
       <center>
-          <h2 id='Relighting_GT' style="padding-top: 40px; margin-top: 20px">Relighting Compared with a Light Stage</h2>
-  
-          <br>
-          <br>
-          <div class="row">
-            <div class="col-sm-4"><img src="relit_gt/lightstage.gif"></div>
-            <div class="col-sm-4"><img src="relit_gt/ours.gif"></div>
-        <div class="col-sm-4"><img src="relit_gt/shadegan.gif"></div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col-sm-4">Environmental Relighting of a real person using a Light Stage</div>
-            <div class="col-sm-4">Environmental Relighting of a generated identity using VoLux-GAN</div>
-        <div class="col-sm-4">Directional Relighting of a generated identity using ShadeGAN</div>
-          </div>
+        <h2 id='More_Result'
+            style="padding-top: 40px; margin-top: 20px">More Results</h2>
+        <br>
+        <br>
+
+        <div class="row">
+          <div><img src="interpolate/example1/albedo.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example1/relit.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example1/normal.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example1/diffuse.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example1/specular.gif"
+                 width="215"></div>
+        </div>
+        <br>
+        <div class="row">
+          <div><img src="interpolate/example3/albedo.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example3/relit.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example3/normal.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example3/diffuse.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example3/specular.gif"
+                 width="215"></div>
+        </div>
+        <br>
+        <div class="row">
+          <div><img src="interpolate/example5/albedo.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example5/relit.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example5/normal.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example5/diffuse.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example5/specular.gif"
+                 width="215"></div>
+        </div>
+        <br>
+        <div class="row">
+          <div><img src="interpolate/example4/albedo.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example4/relit.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example4/normal.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example4/diffuse.gif"
+                 width="215"></div>
+          <div class="ml-auto"><img src="interpolate/example4/specular.gif"
+                 width="215"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 text-center">Albedo</div>
+          <div class="col-md-3 text-center">Relit Image</div>
+          <div class="col-md-2 text-center">Normals</div>
+          <div class="col-md-3 text-center">Diffuse Shading</div>
+          <div class="col-md-2 text-center">specular Shading</div>
+        </div>
+
+    </div>
+
     <br>
-      <div align=justify> 
-      We show a comparison of our relighting method with environmental relighting of a real person using a Light Stage, and state-of-the-art directional relighting method of ShadeGAN.    </div>    
-  </center>
-      </div>
+    <!-- <div align=justify>
+         VoLux-GAN is generative face image synthesis method that can generate novel identities in a fully 3D aware manner to enable geometry-consistent view-synthesis while also relighting the generated identities under desired environments with accurate light-transport effects such as shading, shadows and specularities. Volux-GAN generates not just the relit images, but also the underlying physical constituents such as the albedo, geometry, normals and implicit neural surface reflectance features. The generated geometry is used to render diffuse and specular shading layers that are passed as additional maps to a neural rendering network to aid in synthesizing photorealistic relighting. In this animation, we rotate the camera and lighting while interpolating between two randomly sampled latent codes.
+        </div> -->
+    </center>
+  </div>
 
+
+  <br />
+  <hr>
+
+  <div class='container'
+       id='Relighting_GT'>
+    <center>
+      <h2 id='Relighting_GT'
+          style="padding-top: 40px; margin-top: 20px">Relighting Compared with a Light Stage</h2>
 
       <br>
-      <hr>
-  
-      <div class='container' id='Relighting_SingleID'>
-      <center>
-          <h2 id='Relighting_SingleID' style="padding-top: 40px; margin-top: 20px">Relighting a Single Generated Identity Under Different Environments</h2>
-  
-          <br>
-          <br>
-          <div class="row">
-            <div class="col-sm-4"><img src="relit_single_id/relit_1_1.gif"></div>
-            <div class="col-sm-4"><img src="relit_single_id/relit_1_2.gif"></div>
+      <br>
+      <div class="row">
+        <div class="col-sm-4"><img src="relit_gt/lightstage.gif"></div>
+        <div class="col-sm-4"><img src="relit_gt/ours.gif"></div>
+        <div class="col-sm-4"><img src="relit_gt/shadegan.gif"></div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-4">Environmental Relighting of a real person using a Light Stage</div>
+        <div class="col-sm-4">Environmental Relighting of a generated identity using VoLux-GAN</div>
+        <div class="col-sm-4">Directional Relighting of a generated identity using ShadeGAN</div>
+      </div>
+      <br>
+      <div align=justify>
+        We show a comparison of our relighting method with environmental relighting of a real person
+        using a Light Stage, and state-of-the-art directional relighting method of ShadeGAN. </div>
+    </center>
+  </div>
+
+
+  <br>
+  <hr>
+
+  <div class='container'
+       id='Relighting_SingleID'>
+    <center>
+      <h2 id='Relighting_SingleID'
+          style="padding-top: 40px; margin-top: 20px">Relighting a Single Generated Identity Under
+        Different Environments</h2>
+
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-sm-4"><img src="relit_single_id/relit_1_1.gif"></div>
+        <div class="col-sm-4"><img src="relit_single_id/relit_1_2.gif"></div>
         <div class="col-sm-4"><img src="relit_single_id/relit_1_3.gif"></div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4"><img src="relit_single_id/map_1_1.png"></div>
-            <div class="col-sm-4"><img src="relit_single_id/map_1_2.png"></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4"><img src="relit_single_id/map_1_1.png"></div>
+        <div class="col-sm-4"><img src="relit_single_id/map_1_2.png"></div>
         <div class="col-sm-4"><img src="relit_single_id/map_1_3.png"></div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">Environmental 1</div>
-            <div class="col-sm-4">Environmental 2</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">Environmental 1</div>
+        <div class="col-sm-4">Environmental 2</div>
         <div class="col-sm-4">Environmental 3</div>
-          </div>
-      <br>
-      <div align=justify> 
-        We show relighting results of our method for a single generated identity under different rotating environment maps.
-      </div>       
-  
-  </center>
       </div>
       <br>
-      <hr>
-  
-      <div class='container' id='Relighting_MultiID_SameEnv'>
-      <center>
-          <h2 id='Relighting_MultiID_SameEnv' style="padding-top: 40px; margin-top: 20px">Relighting Multiple Generated Identities Under Same Environment</h2>
-  
-          <br>
-          <br>
-          <div class="row">
-            <div class="col-sm-4"><img src="relit_random_id/random_id_1.gif"></div>
-            <div class="col-sm-4"><img src="relit_random_id/random_id_2.gif"></div>
+      <div align=justify>
+        We show relighting results of our method for a single generated identity under different
+        rotating environment maps.
+      </div>
+
+    </center>
+  </div>
+  <br>
+  <hr>
+
+  <div class='container'
+       id='Relighting_MultiID_SameEnv'>
+    <center>
+      <h2 id='Relighting_MultiID_SameEnv'
+          style="padding-top: 40px; margin-top: 20px">Relighting Multiple Generated Identities Under
+        Same Environment</h2>
+
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-sm-4"><img src="relit_random_id/random_id_1.gif"></div>
+        <div class="col-sm-4"><img src="relit_random_id/random_id_2.gif"></div>
         <div class="col-sm-4"><img src="relit_random_id/random_id_3.gif"></div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4"><img src="relit_random_id/map.png" width="128"></div>
+      </div>
+      <div class="row">
         <div class="col-sm-4"></div>
-          </div>
-     
-          <div class="row">
-            <div class="col-sm-4">Identity 1</div>
-            <div class="col-sm-4">Identity 2</div>
+        <div class="col-sm-4"><img src="relit_random_id/map.png"
+               width="128"></div>
+        <div class="col-sm-4"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4">Identity 1</div>
+        <div class="col-sm-4">Identity 2</div>
         <div class="col-sm-4">Identity 3</div>
-          </div>
-          <br>
-   <div align=justify> 
-      We show relighting results of our method for randomly generated identities under the same rotating environment.
-    </div>   
-      </center>
       </div>
       <br>
-      <hr>
-  
-      <div class='container' id='Relighting_MultiID'>
-      <center>
-          <h2 id='Relighting_MultiID' style="padding-top: 40px; margin-top: 20px">Relighting Multiple Generated Identities Under Different Environments</h2>
-  
-          <br>
-          <br>
-          <div class="row">
-            <div class="col-sm-4"><img src="relit_random_id/relit_2_1.gif"></div>
-            <div class="col-sm-4"><img src="relit_random_id/relit_2_2.gif"></div>
+      <div align=justify>
+        We show relighting results of our method for randomly generated identities under the same
+        rotating environment.
+      </div>
+    </center>
+  </div>
+  <br>
+  <hr>
+
+  <div class='container'
+       id='Relighting_MultiID'>
+    <center>
+      <h2 id='Relighting_MultiID'
+          style="padding-top: 40px; margin-top: 20px">Relighting Multiple Generated Identities Under
+        Different Environments</h2>
+
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-sm-4"><img src="relit_random_id/relit_2_1.gif"></div>
+        <div class="col-sm-4"><img src="relit_random_id/relit_2_2.gif"></div>
         <div class="col-sm-4"><img src="relit_random_id/relit_2_3.gif"></div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4"><img src="relit_random_id/map_2_1.png"></div>
-            <div class="col-sm-4"><img src="relit_random_id/map_2_2.png"></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4"><img src="relit_random_id/map_2_1.png"></div>
+        <div class="col-sm-4"><img src="relit_random_id/map_2_2.png"></div>
         <div class="col-sm-4"><img src="relit_random_id/map_2_3.png"></div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">Identity 1</div>
-            <div class="col-sm-4">Identity 2</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">Identity 1</div>
+        <div class="col-sm-4">Identity 2</div>
         <div class="col-sm-4">Identity 3</div>
-          </div>
-      <br>
-    <div align=justify> 
-      We show relighting results of our method for randomly generated identities under different rotating environment maps. 
-    </div>   
-      </center>
       </div>
       <br>
-      <hr>
-  
-      <div class='container' id='View_MultiID'>
-      <center>
-          <h2 id='View_MultiID' style="padding-top: 40px; margin-top: 20px">View Synthesis of Different Generated Identities</h2>
-  
-          <br>
-          <br>
-          <div class="row">
-            <div class="col-sm-4"><img src="view/view_1.gif"></div>
-            <div class="col-sm-4"><img src="view/view_2.gif"></div>
+      <div align=justify>
+        We show relighting results of our method for randomly generated identities under different
+        rotating environment maps.
+      </div>
+    </center>
+  </div>
+  <br>
+  <hr>
+
+  <div class='container'
+       id='View_MultiID'>
+    <center>
+      <h2 id='View_MultiID'
+          style="padding-top: 40px; margin-top: 20px">View Synthesis of Different Generated
+        Identities</h2>
+
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-sm-4"><img src="view/view_1.gif"></div>
+        <div class="col-sm-4"><img src="view/view_2.gif"></div>
         <div class="col-sm-4"><img src="view/view_3.gif"></div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">Identity 1</div>
-            <div class="col-sm-4">Identity 2</div>
-        <div class="col-sm-4">Identity 3</div>
-          </div>
-  
-          <br>
-          <div align=justify> 
-            We show view synthesis results of our method for randomly generated identities under a fixed environment map.
-          </div>   
-      </center>
       </div>
+      <div class="row">
+        <div class="col-sm-4">Identity 1</div>
+        <div class="col-sm-4">Identity 2</div>
+        <div class="col-sm-4">Identity 3</div>
+      </div>
+
       <br>
-      <hr>
-      
-      <!-- <div class='container' id='Albedo'>
+      <div align=justify>
+        We show view synthesis results of our method for randomly generated identities under a fixed
+        environment map.
+      </div>
+    </center>
+  </div>
+  <br>
+  <hr>
+
+  <!-- <div class='container' id='Albedo'>
       <center>
           <h2 id="Albedo" style="padding-top: 40px; margin-top: 20px">Albedo Stability Comparison with piGAN + TotalRelighting</h2>
-  
+
           <br>
           <br>
           <div class="row">
@@ -717,19 +833,28 @@ img .input-image {
             <div class="col-sm-6">Albedo from VoLux-GAN</div>
           </div>
           <br>
-          <div align=justify> 
+          <div align=justify>
             Here, we compare the albedo image estimated using the baseline method of piGAN+TotalRelighting with the albedo image generated by our method. Note that albedo from piGAN+TR shows color shift and variation across multiple viewpoints, presumably because each albedo are generated independently by TR. Instead, our albedo is more consistent thanks to the 3D-aware volume rendering, which is important to achieve consistent relighting results across camera views.
-          </div>   
+          </div>
       </center>
       </div> -->
 
 
 
-    <!-- Bootstrap core JavaScript -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="//rf.revolvermaps.com/0/0/8.js?i=5vvziwff45r&amp;m=6&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=33" async="async"></script>
+  <!-- Bootstrap core JavaScript -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+          integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+          crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+          integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+          crossorigin="anonymous"></script>
+  <script type="text/javascript"
+          src="//rf.revolvermaps.com/0/0/8.js?i=5vvziwff45r&amp;m=6&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=33"
+          async="async"></script>
 </body>
+
 </html>
